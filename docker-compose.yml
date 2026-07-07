@@ -1,0 +1,18 @@
+services:
+  procureai-api:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      - GROQ_API_KEY=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
+
+  procureai-frontend:
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    depends_on:
+      - procureai-api
